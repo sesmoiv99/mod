@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "axolteam",
+  "version": "${version}",
+  "name": "Axol Team Tab",
+  "description": "Affiche [Axol Team] en bleu clair devant les pseudos de la team dans le Tab.",
+  "environment": "client",
+  "entrypoints": { "client": ["fr.axolteam.AxolTeam"] },
+  "mixins": ["axolteam.mixins.json"],
+  "depends": { "fabricloader": ">=0.18.1", "minecraft": "~1.21.11", "fabric-api": "*" }
+}

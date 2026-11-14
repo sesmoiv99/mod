@@ -1,0 +1,11 @@
+MOD AXOL TEAM (Fabric 1.21.11, cote client)
+
+Prerequis : Java 21 et Gradle 9.2+ (Loom 1.14 l'exige).
+Plus simple : telecharge le template https://fabricmc.net/develop/template/ (1.21.11),
+copie gradlew, gradlew.bat et le dossier gradle/ dans ce dossier.
+
+1. Dans ce dossier : ./gradlew build   (ou: gradle build)
+2. Le .jar est dans build/libs/axolteam-1.0.0.jar
+3. Mets-le dans .minecraft/mods avec Fabric Loader 0.18.1+ et Fabric API 1.21.11.
+
+Membres : modifie la liste dans AxolTeam.java (en minuscules).
