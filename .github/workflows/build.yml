@@ -18,7 +18,7 @@ jobs:
           yarn_mappings=1.21.11+build.4
           loader_version=0.18.4
           fabric_version=0.141.3+1.21.11
-          mod_version=1.0.1
+          mod_version=1.0.2
           EOF
           cat > settings.gradle <<'EOF'
           pluginManagement {
@@ -90,7 +90,6 @@ jobs:
           package fr.axolteam.mixin;
           import fr.axolteam.AxolTeam;
           import net.minecraft.client.render.entity.EntityRenderer;
-          import net.minecraft.client.render.entity.state.EntityRenderState;
           import net.minecraft.entity.Entity;
           import net.minecraft.entity.player.PlayerEntity;
           import net.minecraft.text.Text;
@@ -98,15 +97,15 @@ jobs:
           import org.spongepowered.asm.mixin.Mixin;
           import org.spongepowered.asm.mixin.injection.At;
           import org.spongepowered.asm.mixin.injection.Inject;
-          import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+          import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
           @Mixin(EntityRenderer.class)
           public abstract class NameTagMixin {
-              @Inject(method = "updateRenderState", at = @At("RETURN"))
-              private void axolTeamName(Entity entity, EntityRenderState state, float tickDelta, CallbackInfo ci) {
-                  if (entity instanceof PlayerEntity && state.displayName != null) {
+              @Inject(method = "getDisplayName", at = @At("RETURN"), cancellable = true)
+              private void axolTeamName(Entity entity, CallbackInfoReturnable<Text> cir) {
+                  if (entity instanceof PlayerEntity) {
                       String name = entity.getName().getString();
                       if (AxolTeam.MEMBERS.contains(name.toLowerCase())) {
-                          state.displayName = Text.literal("[Axol Team] " + name).formatted(Formatting.AQUA);
+                          cir.setReturnValue(Text.literal("[Axol Team] " + name).formatted(Formatting.AQUA));
                       }
                   }
               }
@@ -138,4 +137,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: axolteam
-          path: proj/build/libs/axolteam-1.0.1.jar
+          path: proj/build/libs/axolteam-1.0.2.jar
